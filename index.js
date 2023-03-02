@@ -9,7 +9,7 @@ function getFeedHtml(){
     for (let tweet of tweetsData){
         feedHtml += `<div class="tweet">
         <div class="tweet-inner">
-            <img src="/images/${tweet.profilePic}" class="profile-pic">
+            <img src="${tweet.profilePic}" class="profile-pic">
             <div>
                 <p class="handle">${tweet.handle}</p>
                 <p class="tweet-text">${tweet.tweetText}</p>
@@ -27,7 +27,12 @@ function getFeedHtml(){
             </div>            
         </div>
     </div>`
-    console.log(feedHtml)
+    
     }
+    return feedHtml
 }
-getFeedHtml()
+
+function render(){
+    document.getElementById('feed').innerHTML = getFeedHtml()
+}
+render()
