@@ -1,9 +1,31 @@
 import { tweetsData } from "/data.js"
 const tweetInput = document.getElementById('tweet-input')
 const tweetBtn = document.getElementById('tweet-btn')
+
 tweetBtn.addEventListener('click', function(){
     console.log(tweetInput.value)
 })
+document.addEventListener("click", (e)=> {
+    if(e.target.dataset.like){
+        handleLikeClick(e.target.dataset.like)
+    }
+})
+function handleLikeClick(tweetId){
+    const targetTweetObj = tweetsData.filter(function(tweet){
+            return tweetId === tweet.uuid
+})[0]
+    targetTweetObj.likes++
+    console.log(targetTweetObj)
+    console.log(tweetsData)
+    
+    // for( let liked of tweetsData){
+    //     if(tweetId === liked.uuid){
+    //         console.log(liked.likes ++)
+    //     }
+    // }
+
+
+}
 function getFeedHtml(){
     let feedHtml = ``
     tweetsData.forEach((tweet) => {
@@ -15,15 +37,18 @@ function getFeedHtml(){
                 <p class="tweet-text">${tweet.tweetText}</p>
                 <div class="tweet-details">
                     <span class="tweet-detail">
-                        <i class="fa-regular fa-comment-dots"></i>
+                        <i class="fa-regular fa-comment-dots" 
+                        data-reply=${tweet.uuid}></i>
                         ${tweet.replies.length}
                     </span>
                     <span class="tweet-detail">
-                        <i class="fa-solid fa-heart"></i>
+                        <i class="fa-solid fa-heart" 
+                        data-like=${tweet.uuid}></i>
                         ${tweet.likes}
                     </span>
                     <span class="tweet-detail">
-                        <i class="fa-solid fa-retweet"></i>
+                        <i class="fa-solid fa-retweet" 
+                        data-retweet=${tweet.uuid}></i>
                         ${tweet.retweets}
                     </span>
                 </div>   
