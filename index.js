@@ -14,17 +14,14 @@ function handleLikeClick(tweetId){
     const targetTweetObj = tweetsData.filter(function(tweet){
             return tweetId === tweet.uuid
 })[0]
-    targetTweetObj.likes++
-    console.log(targetTweetObj)
-    console.log(tweetsData)
     
-    // for( let liked of tweetsData){
-    //     if(tweetId === liked.uuid){
-    //         console.log(liked.likes ++)
-    //     }
-    // }
-
-
+    if(targetTweetObj.isLiked){
+        targetTweetObj.likes--
+    } else {
+        targetTweetObj.likes++
+    }
+    targetTweetObj.isLiked = !targetTweetObj.isLiked
+    render()
 }
 function getFeedHtml(){
     let feedHtml = ``
