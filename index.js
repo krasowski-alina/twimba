@@ -19,8 +19,11 @@ function handleLikeClick(tweetId){
             return tweetId === tweet.uuid
 })[0]
     
+    
+
     if(targetTweetObj.isLiked){
         targetTweetObj.likes--
+        
     } else {
         targetTweetObj.likes++
     }
@@ -44,6 +47,9 @@ function handleRetweetClick(tweetId){
 
 function getFeedHtml(){
     let feedHtml = ``
+    let likedIconClass = ``
+    let retweetIconClass = ``
+
     tweetsData.forEach((tweet) => {
         feedHtml += `<div class="tweet">
         <div class="tweet-inner">
@@ -58,12 +64,14 @@ function getFeedHtml(){
                         ${tweet.replies.length}
                     </span>
                     <span class="tweet-detail">
-                        <i class="fa-solid fa-heart" 
+                        <i class="fa-solid fa-heart 
+                        ${tweet.isLiked? likedIconClass = 'liked' : likedIconClass = '#999'}" 
                         data-like=${tweet.uuid}></i>
                         ${tweet.likes}
                     </span>
                     <span class="tweet-detail">
-                        <i class="fa-solid fa-retweet" 
+                        <i class="fa-solid fa-retweet 
+                        ${tweet.isRetweeted? retweetIconClass = 'retweeted' : retweetIconClass = '#999'}" 
                         data-retweet=${tweet.uuid}></i>
                         ${tweet.retweets}
                     </span>
