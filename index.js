@@ -47,8 +47,7 @@ function handleRetweetClick(tweetId){
     render()
 }
 function handleReplyClick(tweetId){
-    
-    console.log(tweetId)
+    document.getElementById(`replies-${tweetId}`).classList.toggle('hidden')
 }
 function getFeedHtml(){
     let feedHtml = ``
@@ -61,17 +60,16 @@ function getFeedHtml(){
             for (let reply of tweet.replies){
                 repliesHtml += `  
                 <div class="tweet-reply"> 
-                <div class="tweet-inner">
-                    <img src="${reply.profilePic}" class="profile-pic">
-                        <div>
-                            <p class="handle">${reply.handle}</p>
-                            <p class="tweet-text">${reply.tweetText}</p>
+                    <div class="tweet-inner">
+                        <img src="${reply.profilePic}" class="profile-pic">
+                            <div>
+                                <p class="handle">${reply.handle}</p>
+                                <p class="tweet-text">${reply.tweetText}</p>
+                            </div>
                         </div>
-                    </div>
                     </div>`
             }
         }
-
         feedHtml += `<div class="tweet">
         <div class="tweet-inner">
             <img src="${tweet.profilePic}" class="profile-pic">
