@@ -1,10 +1,6 @@
 import { tweetsData } from "/data.js"
 const tweetInput = document.getElementById('tweet-input')
-const tweetBtn = document.getElementById('tweet-btn')
 
-tweetBtn.addEventListener('click', function(){
-    console.log(tweetInput.value)
-})
 document.addEventListener("click", (e)=> {
     if(e.target.dataset.like){
         handleLikeClick(e.target.dataset.like)
@@ -17,7 +13,15 @@ document.addEventListener("click", (e)=> {
         handleReplyClick(e.target.dataset.reply)
         
     }
+    else if (e.target.id === "tweet-btn"){
+        handleTweetClick()
+        
+    }
 })
+function handleTweetClick(){
+    console.log(tweetInput.value)
+}
+
 function handleLikeClick(tweetId){
     const targetTweetObj = tweetsData.filter(function(tweet){
             return tweetId === tweet.uuid
