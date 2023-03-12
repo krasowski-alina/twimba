@@ -1,6 +1,6 @@
 import { tweetsData } from "/data.js"
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
-const tweetInput = document.getElementById('tweet-input')
+
 
 document.addEventListener("click", (e)=> {
     if(e.target.dataset.like){
@@ -8,32 +8,15 @@ document.addEventListener("click", (e)=> {
     }
     else if (e.target.dataset.retweet){
         handleRetweetClick(e.target.dataset.retweet)
-        
     }
     else if (e.target.dataset.reply){
         handleReplyClick(e.target.dataset.reply)
-        
     }
     else if (e.target.id === "tweet-btn"){
         handleTweetClick()
         
     }
 })
-function handleTweetClick(){
-    const newTweet = {
-            handle: `@Scrimba`,
-            profilePic: `images/scrimbalogo.jpg`,
-            likes: 0,
-            retweets: 0,
-            tweetText: `${tweetInput.value}`,
-            replies: [],
-            isLiked: false,
-            isRetweeted: false,
-            uuid: `${uuidv4()}`,
-    }
-    tweetsData.push(newTweet)
-
-}
 
 function handleLikeClick(tweetId){
     const targetTweetObj = tweetsData.filter(function(tweet){
@@ -41,8 +24,7 @@ function handleLikeClick(tweetId){
 })[0]
     
     if(targetTweetObj.isLiked){
-        targetTweetObj.likes--
-        
+        targetTweetObj.likes--   
     } else {
         targetTweetObj.likes++
     }
@@ -63,15 +45,45 @@ function handleRetweetClick(tweetId){
     targetTweetObj.isRetweeted = !targetTweetObj.isRetweeted
     render()
 }
-function handleReplyClick(tweetId){
-    document.getElementById(`replies-${tweetId}`).classList.toggle('hidden')
+
+function handleReplyClick(replyId){
+    document.getElementById(`replies-${replyId}`).classList.toggle('hidden')
+    console.log( document.getElementById(`replies-${replyId}`))
 }
+
+function handleTweetClick(){
+    const tweetInput = document.getElementById('tweet-input')
+    if(tweetInput.value){
+        tweetsData.unshift({
+            handle: `@Scrimba`,
+            profilePic: `images/scrimbalogo.png`,
+            likes: 0,
+            retweets: 0,
+            tweetText: `${tweetInput.value}`,
+            replies: [],
+            isLiked: false,
+            isRetweeted: false,
+            uuid: `${uuidv4()}`,
+    })
+    tweetInput.value = ``
+    }
+    else{
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Your tweet is empty! Write something! ',
+            })
+    }
+    render()
+}
+
 function getFeedHtml(){
     let feedHtml = ``
-    let likedIconClass = ``
-    let retweetIconClass = ``
-    
+
     tweetsData.forEach((tweet) => {
+        let likedIconClass = ``
+        let retweetIconClass = ``
+
         let repliesHtml = ``
         if(tweet.replies.length > 0){
             for (let reply of tweet.replies){
@@ -115,11 +127,11 @@ function getFeedHtml(){
             </div>            
         </div>
     </div>
-    <div id="replies-${tweet.uuid}">
+    <div class="hidden" id ="replies-${tweet.uuid}">
         ${repliesHtml}
     </div> 
 `
-    })
+})
     return feedHtml
 }
 
